@@ -1,0 +1,640 @@
+swagger: "2.0"
+info:
+  description: "REST API VideApp (Module 1)"
+  version: "1.0.0"
+  title: "VideApp Module 1"
+  termsOfService: "https://beethovens-werkstatt.de/"
+  contact:
+    email: "kepper@edirom.de"
+  license:
+    name: "GPL 2"
+    url: "https://www.gnu.org/licenses/gpl-2.0"
+host: "modul1.beethovens-werkstatt.de"
+basePath: "/"
+schemes:
+- "https"
+paths:
+  /edition/{edition}/introduction.html:
+    get:
+      summary: Introductionary text
+      description: |
+        Get introductionary text of edition.
+        
+        ***key*** `getIntroText`
+      produces:
+      - text/html
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /file/{edition}.xml:
+    get:
+      summary: MEI code for edition
+      description: |
+        Retrieve MEI code for edition.
+        
+        ***key*** `getXmlFile`
+      produces:
+      - application/xml
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /file/{ID}.svg:
+    get:
+      summary: SVG shapes
+      description: |
+        Get SVG for shapes of ID
+        Get SVG for page overlay of ID
+        (e.g. Op.75.2_A_fol5r_overlays)
+        ***key*** `getPageShapesSvg`
+        ***key*** `getRenderedPageOverlay`
+        
+        ***result***
+        SVG mit Pfad-Elementen
+        ```
+        <svg version="1.1" id="Op.75.2_A_fol5r_overlays" x="0px" y="0px" width="958.08px" height="710.4px" viewBox="0 0 958.08 710.4" ... >
+        ...
+        <path id="shape_9a1f6101-afa1-4fce-86b7-91bd2af3db76" opacity="0.4" fill="#eee3ce" d="M429.84,513.72c0.507, ... " />
+        ...
+        ```
+      produces:
+      - application/xml
+      parameters:
+      - name: "ID"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The shape ID (e.g. Op.75.2_A_fol5r_overlays)
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/reconstructionSetup.json:
+    get:
+      summary: Page info
+      description: |
+        Prepare a json object with info about the pages available in all sources of the edition.
+        
+        
+        ***key*** `getPages`
+        
+        ***result***
+        ```
+        {
+          "id": "Codierung_WoO32",
+          "scars": [
+            {
+              "id": "newe5f51a34-778e-462a-a53c-bceab4b68aba",
+              "label": "Textnarbe_1",
+              "ordered": true,
+              "complete": false,
+              "staves": [ 1 ],
+              "states": [
+                {
+                  "id": "state135r_1a",
+                  "label": "A",
+                  "open": false,
+                  "deletion": false,
+                  "index": 1,
+                  "position": 1,
+                  "next": [ "state135r_1b" ],
+                  "prev": [],
+                  "follows": [],
+                  "precedes": [ "state135r_1b" ],
+                  "shapes": [
+                    "shape_ba6dee9b-3f6b-4d13-9257-81eb6ac7aa76",
+                    "shape_69d01d66-d243-42d1-ada0-e863c096fb20",
+                    "shape_9639c605-b7ac-4969-814e-5f1fbbb07b57"
+                  ],
+                  "transfers": []
+                }, ...
+              ]
+            }, ...
+          ],
+          "sources": [
+            {
+              "id": "source_1",
+              "label": "",
+              "desc": "",
+              "pages": [
+                {
+                  "id": "edirom_surface_f32f6aa6-f7f4-4043-9e1b-b181363ec031",
+                  "dpm": "20.87012987012987",
+                  "label": "135r",
+                  "visible": true,
+                  "added": "",
+                  "removed": "",
+                  "type": "recto",
+                  "width_px": 6428,
+                  "height_px": 4726,
+                  "width_mm": 308,
+                  "height_mm": 222,
+                  "facsRef": "http://nashira.upb.de:8070/bw/woo32/autograph/fol135r/",
+                  "pageRef": "",
+                  "shapesRef": "Woo32_A_fol135r_overlays",
+                  "measures": [
+                    {
+                      "id": "bb2344637-1c21-4da8-b299-a2e6b8eb1ce1",
+                      "zone": "edirom_zone_43235546-604f-4eed-9a97-9c87698b290e",
+                      "n": "0",
+                      "label": "0",
+                      "ulx": 604,
+                      "uly": 206,
+                      "lrx": 1578,
+                      "lry": 755,
+                      "width": 974,
+                      "height": 549
+                    }, ...
+                ],
+                  "patches": []
+                }, ...
+              ]
+            }
+          ],
+          "maxDimensions": {
+            "width": 308,
+            "height": 222
+          }
+        }
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/finalState.xml:
+    get:
+      summary: Final state of edition
+      description: |
+        Get the final state of MEI of the edition. This is the last valid version of the score with all known corrections applied.
+        
+        ***key*** `getFinalState`
+      produces:
+      - application/xml
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/states/overview.json:
+    get:
+      summary: scars and their states of edition
+      description: |
+        Get basic information about the scars and their states available in the edition.
+        
+        ***key*** `getStates`
+        
+        ***result***
+        ```
+        [
+          {
+            "id": "newe5f51a34-778e-462a-a53c-bceab4b68aba",
+            "label": "2",
+            "ordered": true,
+            "firstMeasure": "b00ef9318-10d9-4086-a3fd-450147c58705",
+            "complete": false,
+            "staves": [
+              1
+            ],
+            "affectedMeasures": [
+              "b00ef9318-10d9-4086-a3fd-450147c58705"
+            ],
+            "affectedNotes": [
+              "b1fc8e0ed-2a0c-46b7-aefe-986e987daeba", ...
+            ],
+            "states": [
+              {
+                "id": "state135r_1a",
+                "label": "A",
+                "open": false,
+                "deletion": false,
+                "index": 1,
+                "position": 1,
+                "next": [ "state135r_1b" ],
+                "prev": [],
+                "follows": [],
+                "precedes": [ "state135r_1b" ],
+                "shapes": [
+                  "shape_ba6dee9b-3f6b-4d13-9257-81eb6ac7aa76", ...
+                ],
+                "transfers": []
+              }, ...
+            ],
+            "categories": [
+              "Rhythmische_Veränderung",
+              "Revisionsvariante"
+            ]
+          }, ...
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/scars/categories.json:
+    get:
+      summary: Categories of scars in score
+      description: |
+        Get categories of scars in the score.
+        
+        ***key*** `getScarCategories`
+        
+        ***result***
+        ```
+        ["Rhythmische_Veränderung","Revisionsvariante", ...]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/measures.json:
+    get:
+      summary: Information of measures
+      description: |
+        Get high level information about measures of the score.
+        
+        ***key*** `getMeasures`
+        
+        ***result***
+        ```
+        {
+          "edition": "Codierung_WoO32",
+          "staves": [
+            {
+              "n": "1",
+              "label": "Viola"
+            },
+            {
+              "n": "2",
+              "label": "Violoncello"
+            }
+          ],
+          "measures": [
+            {
+              "id": "bb2344637-1c21-4da8-b299-a2e6b8eb1ce1",
+              "label": "0",
+              "n": "0",
+              "scars": []
+            }, ...,
+            {
+              "id": "b00ef9318-10d9-4086-a3fd-450147c58705",
+              "label": "2",
+              "n": "2",
+              "scars": [
+                {
+                  "scar": "newe5f51a34-778e-462a-a53c-bceab4b68aba",
+                  "complete": false,
+                  "staves": [
+                    1
+                  ]
+                }
+              ]
+            }, ...
+          ],
+          "scars": [
+            {
+              "id": "newe5f51a34-778e-462a-a53c-bceab4b68aba",
+              "complete": false,
+              "staves": [ 1 ],
+              "categories": [
+                "Rhythmische_Veränderung",
+                "Revisionsvariante"
+              ]
+            }, ...
+          ]
+        }
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+        description: |
+          The edition ID
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/invarianceRelations.json:
+    get:
+      summary: Relations reflecting invariances
+      description: |
+        Get relations of notes that reflect invariants.
+        
+        ***key*** `getInvariance`
+        
+        ***result***
+        ```
+        {
+          "states": [ "qwertz1", "qwertz2", "qwertz3", ...],
+          "relations": {
+            "ae81sdf83ab6-be19-432b-a00b-b64edfb62243": {
+              "relationID": "moppel13f930ea-8405-4325-a5d9-35a41cdebace",
+              "originID": "ae8183ab6-be19-432b-a00b-b64edfb62243",
+              "targetState": "qwertz2",
+              "originState": "qwertz1"
+            }, ...
+          },
+          "baseStates": {
+            "a0e1c969b-5975-4125-8c80-b2e8bcf9a0b3": "qwertz3",
+            ...
+          },
+          "suppliedIDs": [
+            "abb7f3244-6e66-4448-9e10-818ee5dbc38f",
+            ...
+          ]
+        }        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/shape/{ID}/info.json:
+    get:
+      summary: Info of SVG shape
+      description: |
+        Get all informations for a SVG shape in facsimile for specific score object.
+        
+        ***key*** `getShapeInfo`
+        
+        ***result***
+        ```
+        [
+          {
+            "name": "note",
+            "id": "b0b0008d3-aca3-43de-923c-11db3e1b14ac",
+            "type": "VIDE_PROTOCOL_OBJECT_NOTATION",
+            "states": [
+              {
+                "id": "state135r_1a",
+                "label": "A",
+                "type": "add"
+              }
+            ]
+          }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        description: "edition-ID"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: "shape-ID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/object/{ID}/shapes.json:
+    get:
+      summary: Get SVG shape IDs
+      description: |
+        Get all informations of MEI object to get from MEI to SVG
+        
+        ***key*** `getShapesForObject`
+        
+        ***result***
+        ```
+        {"shapes":["shape_e8b539dc-7638-4d59-bf1a-1959be387bc4"]}
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        description: "edition-ID - e.g. Codierung_WoO32"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: "MEI-ID, e.g. note bf438d374-d4a8-4ab9-a882-bca89a9b735e"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/element/{ID}/en/description.json:
+    get:
+      summary: Get element description
+      description: |
+        Get all information of MEI element.
+        
+        ***key*** `getElementDesc`
+        
+        ***result***
+        ```
+        [
+          {
+            "type": "note",
+            "id": "a1c4c35cd-0da1-48db-ac4a-2ecd8b2b38fb",
+            "measure": "measure 135d, Pianoforte",
+            "position": "part of scar Textnarbe",
+            "bravura": "",
+            "desc": "C4",
+            "stateDesc": "3",
+            "supplied": false,
+            "unclear": false,
+            "svgIDs": []
+          }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: MEI-ID, e.g. note
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/element/{ID}.xml:
+    get:
+      summary: MEI object
+      description: |
+        From MEI ID get MEI object with all childs underneath in score.
+        
+        ***key*** `getElementXml`
+        
+        ***result***
+        ```
+        <note xmlns="http://www.music-encoding.org/ns/mei" xml:id="a1c4c35cd-0da1-48db-ac4a-2ecd8b2b38fb" pname="c" oct="4"/>
+        ```
+      produces:
+      - application/xml
+      parameters:
+      - name: "edition"
+        description: "edition-ID"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: "MEI-ID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/element/{ID}/{width},{height}/facsimileInfo.json:
+    get:
+      summary: "getElementFacsimileInfo"
+      description: |
+         Get all the informtion about shape (and?) MEI object.
+         
+         ***key*** `getElementFacsimileInfo`
+         
+         ***result***
+         ```
+         {
+           "id": "a633660f9-9348-4a48-8d36-2313c14291a7",
+           "pages": [
+            {
+              "id": "edirom_surface_61b51f3f-b0dc-49d1-8c6c-b985ee7f3a3a",
+              "uri": "http://nashira.upb.de:8070/bw/op75.2/HCB_Mh_34/fol5r/2940,4287,1537,444/900,260/0/default.jpg",
+              "label": ", 5r"
+            }
+          ]
+         }
+         ```
+      produces:
+      - application/json
+      parameters:
+      - name: "edition"
+        description: edition-ID, e.g. Codierung_op.75.2
+        in: "path"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: MEI-ID, e.g. d1e44553
+        in: "path"
+        required: true
+        type: "string"
+      - name: "width"
+        description: default 450
+        in: "path"
+        required: true
+        type: "integer"
+      - name: "height"
+        description: default 130
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/element/{ID}/states/{otherStates}/preview.xml:
+    get:
+      summary: MEI transcription preview
+      description: |
+        Request MEI preview of an item relative to a measure and its moment.
+        
+        ***key*** `getTranscriptionPreview`
+      produces:
+      - application/xml
+      parameters:
+      - name: "edition"
+        description: edition ID
+        in: "path"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: MEI ID
+        in: "path"
+        required: true
+        type: "string"
+      - name: "otherStates"
+        description: active MEI state element
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+  /edition/{edition}/state/{ID}/otherStates/{otherStates}/meiSnippet.xml:
+    get:
+      summary: MEI snippet
+      description: |
+        Get MEI snippet
+        
+        ***key*** `getState`
+      produces:
+      - application/xml
+      parameters:
+      - name: "edition"
+        description: edition ID
+        in: "path"
+        required: true
+        type: "string"
+      - name: "ID"
+        description: MEI ID
+        in: "path"
+        required: true
+        type: "string"
+      - name: "otherStates"
+        description: active MEI state element
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+
+

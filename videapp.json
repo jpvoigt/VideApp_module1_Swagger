@@ -1,0 +1,466 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "REST API VideApp (Module 1)",
+    "version": "1.0.0",
+    "title": "VideApp Module 1",
+    "termsOfService": "https://beethovens-werkstatt.de/",
+    "contact": {
+      "email": "kepper@edirom.de"
+    },
+    "license": {
+      "name": "GPL 2",
+      "url": "https://www.gnu.org/licenses/gpl-2.0"
+    }
+  },
+  "host": "modul1.beethovens-werkstatt.de",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/edition/{edition}/introduction.html": {
+      "get": {
+        "summary": "Introductionary text",
+        "description": "Get introductionary text of edition.\n\n***key*** `getIntroText`\n",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/file/{edition}.xml": {
+      "get": {
+        "summary": "MEI code for edition",
+        "description": "Retrieve MEI code for edition.\n\n***key*** `getXmlFile`\n",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/file/{ID}.svg": {
+      "get": {
+        "summary": "SVG shapes",
+        "description": "Get SVG for shapes of ID\nGet SVG for page overlay of ID\n(e.g. Op.75.2_A_fol5r_overlays)\n***key*** `getPageShapesSvg`\n***key*** `getRenderedPageOverlay`\n\n***result***\nSVG mit Pfad-Elementen\n```\n<svg version=\"1.1\" id=\"Op.75.2_A_fol5r_overlays\" x=\"0px\" y=\"0px\" width=\"958.08px\" height=\"710.4px\" viewBox=\"0 0 958.08 710.4\" ... >\n...\n<path id=\"shape_9a1f6101-afa1-4fce-86b7-91bd2af3db76\" opacity=\"0.4\" fill=\"#eee3ce\" d=\"M429.84,513.72c0.507, ... \" />\n...\n```\n",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The shape ID (e.g. Op.75.2_A_fol5r_overlays)\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/reconstructionSetup.json": {
+      "get": {
+        "summary": "Page info",
+        "description": "Prepare a json object with info about the pages available in all sources of the edition.\n\n\n***key*** `getPages`\n\n***result***\n```\n{\n  \"id\": \"Codierung_WoO32\",\n  \"scars\": [\n    {\n      \"id\": \"newe5f51a34-778e-462a-a53c-bceab4b68aba\",\n      \"label\": \"Textnarbe_1\",\n      \"ordered\": true,\n      \"complete\": false,\n      \"staves\": [ 1 ],\n      \"states\": [\n        {\n          \"id\": \"state135r_1a\",\n          \"label\": \"A\",\n          \"open\": false,\n          \"deletion\": false,\n          \"index\": 1,\n          \"position\": 1,\n          \"next\": [ \"state135r_1b\" ],\n          \"prev\": [],\n          \"follows\": [],\n          \"precedes\": [ \"state135r_1b\" ],\n          \"shapes\": [\n            \"shape_ba6dee9b-3f6b-4d13-9257-81eb6ac7aa76\",\n            \"shape_69d01d66-d243-42d1-ada0-e863c096fb20\",\n            \"shape_9639c605-b7ac-4969-814e-5f1fbbb07b57\"\n          ],\n          \"transfers\": []\n        }, ...\n      ]\n    }, ...\n  ],\n  \"sources\": [\n    {\n      \"id\": \"source_1\",\n      \"label\": \"\",\n      \"desc\": \"\",\n      \"pages\": [\n        {\n          \"id\": \"edirom_surface_f32f6aa6-f7f4-4043-9e1b-b181363ec031\",\n          \"dpm\": \"20.87012987012987\",\n          \"label\": \"135r\",\n          \"visible\": true,\n          \"added\": \"\",\n          \"removed\": \"\",\n          \"type\": \"recto\",\n          \"width_px\": 6428,\n          \"height_px\": 4726,\n          \"width_mm\": 308,\n          \"height_mm\": 222,\n          \"facsRef\": \"http://nashira.upb.de:8070/bw/woo32/autograph/fol135r/\",\n          \"pageRef\": \"\",\n          \"shapesRef\": \"Woo32_A_fol135r_overlays\",\n          \"measures\": [\n            {\n              \"id\": \"bb2344637-1c21-4da8-b299-a2e6b8eb1ce1\",\n              \"zone\": \"edirom_zone_43235546-604f-4eed-9a97-9c87698b290e\",\n              \"n\": \"0\",\n              \"label\": \"0\",\n              \"ulx\": 604,\n              \"uly\": 206,\n              \"lrx\": 1578,\n              \"lry\": 755,\n              \"width\": 974,\n              \"height\": 549\n            }, ...\n        ],\n          \"patches\": []\n        }, ...\n      ]\n    }\n  ],\n  \"maxDimensions\": {\n    \"width\": 308,\n    \"height\": 222\n  }\n}\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/finalState.xml": {
+      "get": {
+        "summary": "Final state of edition",
+        "description": "Get the final state of MEI of the edition. This is the last valid version of the score with all known corrections applied.\n\n***key*** `getFinalState`\n",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/states/overview.json": {
+      "get": {
+        "summary": "scars and their states of edition",
+        "description": "Get basic information about the scars and their states available in the edition.\n\n***key*** `getStates`\n\n***result***\n```\n[\n  {\n    \"id\": \"newe5f51a34-778e-462a-a53c-bceab4b68aba\",\n    \"label\": \"2\",\n    \"ordered\": true,\n    \"firstMeasure\": \"b00ef9318-10d9-4086-a3fd-450147c58705\",\n    \"complete\": false,\n    \"staves\": [\n      1\n    ],\n    \"affectedMeasures\": [\n      \"b00ef9318-10d9-4086-a3fd-450147c58705\"\n    ],\n    \"affectedNotes\": [\n      \"b1fc8e0ed-2a0c-46b7-aefe-986e987daeba\", ...\n    ],\n    \"states\": [\n      {\n        \"id\": \"state135r_1a\",\n        \"label\": \"A\",\n        \"open\": false,\n        \"deletion\": false,\n        \"index\": 1,\n        \"position\": 1,\n        \"next\": [ \"state135r_1b\" ],\n        \"prev\": [],\n        \"follows\": [],\n        \"precedes\": [ \"state135r_1b\" ],\n        \"shapes\": [\n          \"shape_ba6dee9b-3f6b-4d13-9257-81eb6ac7aa76\", ...\n        ],\n        \"transfers\": []\n      }, ...\n    ],\n    \"categories\": [\n      \"Rhythmische_Veränderung\",\n      \"Revisionsvariante\"\n    ]\n  }, ...\n]\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/scars/categories.json": {
+      "get": {
+        "summary": "Categories of scars in score",
+        "description": "Get categories of scars in the score.\n\n***key*** `getScarCategories`\n\n***result***\n```\n[\"Rhythmische_Veränderung\",\"Revisionsvariante\", ...]\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/measures.json": {
+      "get": {
+        "summary": "Information of measures",
+        "description": "Get high level information about measures of the score.\n\n***key*** `getMeasures`\n\n***result***\n```\n{\n  \"edition\": \"Codierung_WoO32\",\n  \"staves\": [\n    {\n      \"n\": \"1\",\n      \"label\": \"Viola\"\n    },\n    {\n      \"n\": \"2\",\n      \"label\": \"Violoncello\"\n    }\n  ],\n  \"measures\": [\n    {\n      \"id\": \"bb2344637-1c21-4da8-b299-a2e6b8eb1ce1\",\n      \"label\": \"0\",\n      \"n\": \"0\",\n      \"scars\": []\n    }, ...,\n    {\n      \"id\": \"b00ef9318-10d9-4086-a3fd-450147c58705\",\n      \"label\": \"2\",\n      \"n\": \"2\",\n      \"scars\": [\n        {\n          \"scar\": \"newe5f51a34-778e-462a-a53c-bceab4b68aba\",\n          \"complete\": false,\n          \"staves\": [\n            1\n          ]\n        }\n      ]\n    }, ...\n  ],\n  \"scars\": [\n    {\n      \"id\": \"newe5f51a34-778e-462a-a53c-bceab4b68aba\",\n      \"complete\": false,\n      \"staves\": [ 1 ],\n      \"categories\": [\n        \"Rhythmische_Veränderung\",\n        \"Revisionsvariante\"\n      ]\n    }, ...\n  ]\n}\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The edition ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/invarianceRelations.json": {
+      "get": {
+        "summary": "Relations reflecting invariances",
+        "description": "Get relations of notes that reflect invariants.\n\n***key*** `getInvariance`\n\n***result***\n```\n{\n  \"states\": [ \"qwertz1\", \"qwertz2\", \"qwertz3\", ...],\n  \"relations\": {\n    \"ae81sdf83ab6-be19-432b-a00b-b64edfb62243\": {\n      \"relationID\": \"moppel13f930ea-8405-4325-a5d9-35a41cdebace\",\n      \"originID\": \"ae8183ab6-be19-432b-a00b-b64edfb62243\",\n      \"targetState\": \"qwertz2\",\n      \"originState\": \"qwertz1\"\n    }, ...\n  },\n  \"baseStates\": {\n    \"a0e1c969b-5975-4125-8c80-b2e8bcf9a0b3\": \"qwertz3\",\n    ...\n  },\n  \"suppliedIDs\": [\n    \"abb7f3244-6e66-4448-9e10-818ee5dbc38f\",\n    ...\n  ]\n}        ```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/shape/{ID}/info.json": {
+      "get": {
+        "summary": "Info of SVG shape",
+        "description": "Get all informations for a SVG shape in facsimile for specific score object.\n\n***key*** `getShapeInfo`\n\n***result***\n```\n[\n  {\n    \"name\": \"note\",\n    \"id\": \"b0b0008d3-aca3-43de-923c-11db3e1b14ac\",\n    \"type\": \"VIDE_PROTOCOL_OBJECT_NOTATION\",\n    \"states\": [\n      {\n        \"id\": \"state135r_1a\",\n        \"label\": \"A\",\n        \"type\": \"add\"\n      }\n    ]\n  }\n]\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "description": "edition-ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "shape-ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/object/{ID}/shapes.json": {
+      "get": {
+        "summary": "Get SVG shape IDs",
+        "description": "Get all informations of MEI object to get from MEI to SVG\n\n***key*** `getShapesForObject`\n\n***result***\n```\n{\"shapes\":[\"shape_e8b539dc-7638-4d59-bf1a-1959be387bc4\"]}\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "description": "edition-ID - e.g. Codierung_WoO32",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "MEI-ID, e.g. note bf438d374-d4a8-4ab9-a882-bca89a9b735e",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/element/{ID}/en/description.json": {
+      "get": {
+        "summary": "Get element description",
+        "description": "Get all information of MEI element.\n\n***key*** `getElementDesc`\n\n***result***\n```\n[\n  {\n    \"type\": \"note\",\n    \"id\": \"a1c4c35cd-0da1-48db-ac4a-2ecd8b2b38fb\",\n    \"measure\": \"measure 135d, Pianoforte\",\n    \"position\": \"part of scar Textnarbe\",\n    \"bravura\": \"\",\n    \"desc\": \"C4\",\n    \"stateDesc\": \"3\",\n    \"supplied\": false,\n    \"unclear\": false,\n    \"svgIDs\": []\n  }\n]\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "MEI-ID, e.g. note",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/element/{ID}.xml": {
+      "get": {
+        "summary": "MEI object",
+        "description": "From MEI ID get MEI object with all childs underneath in score.\n\n***key*** `getElementXml`\n\n***result***\n```\n<note xmlns=\"http://www.music-encoding.org/ns/mei\" xml:id=\"a1c4c35cd-0da1-48db-ac4a-2ecd8b2b38fb\" pname=\"c\" oct=\"4\"/>\n```\n",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "description": "edition-ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "MEI-ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/element/{ID}/{width},{height}/facsimileInfo.json": {
+      "get": {
+        "summary": "getElementFacsimileInfo",
+        "description": "Get all the informtion about shape (and?) MEI object.\n\n***key*** `getElementFacsimileInfo`\n\n***result***\n```\n{\n  \"id\": \"a633660f9-9348-4a48-8d36-2313c14291a7\",\n  \"pages\": [\n   {\n     \"id\": \"edirom_surface_61b51f3f-b0dc-49d1-8c6c-b985ee7f3a3a\",\n     \"uri\": \"http://nashira.upb.de:8070/bw/op75.2/HCB_Mh_34/fol5r/2940,4287,1537,444/900,260/0/default.jpg\",\n     \"label\": \", 5r\"\n   }\n ]\n}\n```\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "description": "edition-ID, e.g. Codierung_op.75.2",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "MEI-ID, e.g. d1e44553",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "width",
+            "description": "default 450",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "height",
+            "description": "default 130",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/element/{ID}/states/{otherStates}/preview.xml": {
+      "get": {
+        "summary": "MEI transcription preview",
+        "description": "Request MEI preview of an item relative to a measure and its moment.\n\n***key*** `getTranscriptionPreview`\n",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "description": "edition ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "MEI ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "otherStates",
+            "description": "active MEI state element",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/edition/{edition}/state/{ID}/otherStates/{otherStates}/meiSnippet.xml": {
+      "get": {
+        "summary": "MEI snippet",
+        "description": "Get MEI snippet\n\n***key*** `getState`\n",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "edition",
+            "description": "edition ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ID",
+            "description": "MEI ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "otherStates",
+            "description": "active MEI state element",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  }
+}
